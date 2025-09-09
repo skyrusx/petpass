@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 10
+  username: postgres
+  password: adminrus
+  host: localhost
+
+development:
+  <<: *default
+  database: petpass_development
+
+test:
+  <<: *default
+  database: petpass_test
