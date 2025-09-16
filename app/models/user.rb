@@ -11,7 +11,7 @@ class User < ApplicationRecord
   private
 
   def fill_name_from_email
-    local = self.email.to_s.split('@', 2).first.to_s.strip
+    local = self.email.to_s.split("@", 2).first.to_s.strip
     self.name = local.presence || "User"
   end
 end
