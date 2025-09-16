@@ -1,0 +1,244 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap";
+
+:root {
+  // Colors
+  --charcoal-blue: #1F2937;
+  --blue-gray: #94A3B8;
+  --bluish-light-gray: #E5E7EB;
+  --midnight-navy: #0B1220;
+  --slate: #0F172A;
+  --cyan-green: #14B8A6;
+
+  // Fonts
+  --font: Roboto;
+}
+
+body {
+  color: var(--bluish-light-gray);
+  background-color: var(--midnight-navy);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(6px);
+    background: color-mix(in srgb, var(--slate) 92%, transparent);
+    border-bottom: 1px solid var(--charcoal-blue);
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      padding: unset;
+      margin: unset;
+      font-size: unset;
+      color: var(--bluish-light-gray);
+
+      .navbar-brand__logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        background: var(--cyan-green);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      }
+    }
+
+    .navbar-nav {
+      .nav-link {
+        color: var(--bluish-light-gray);
+        padding: 8px 12px;
+
+        &:hover {
+          color: var(--cyan-green);
+        }
+
+        &.active {
+          color: var(--cyan-green);
+        }
+      }
+
+      .nav-item:last-child {
+        .nav-link {
+          padding-right: unset;
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: 24px 0 48px;
+
+    .card {
+      color: var(--bluish-light-gray);
+      background: var(--slate);
+      border: 1px solid var(--charcoal-blue);
+      border-radius: 16px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      padding: 1.25rem;
+
+      .card-title {
+        font-weight: 600;
+        margin: 0 0 8px;
+      }
+
+      .card-body {
+        p {
+          margin: 1rem 0;
+        }
+      }
+
+      .preview-docs {
+        background: linear-gradient(135deg, #0f172a 0%, #111b2e 100%);
+      }
+
+      .border-blue {
+        border: 1px solid var(--charcoal-blue);
+        border-radius: 16px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      }
+    }
+  }
+
+  .footer {
+    border-top: 1px solid var(--charcoal-blue);
+    color: var(--blue-gray);
+    padding: 24px 0;
+    font-size: 14px;
+  }
+
+  .btn-success__pj {
+    background-color: #14B8A6;
+
+    &:hover {
+      //color: #212529;
+      background-color: #0D9488;
+    }
+  }
+
+  .btn-default__pj {
+    color: var(--bluish-light-gray);
+
+    &:hover {
+      color: var(--cyan-green);
+    }
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .pj-form {
+    .form-label {
+      display: block;
+    }
+
+    .form-control {
+      border: 1px solid var(--charcoal-blue);
+      background: var(--slate);
+      color: var(--bluish-light-gray);
+
+      &:focus,
+      &:focus-visible {
+        background: var(--slate);
+        color: var(--bluish-light-gray);
+        border-color: var(--cyan-green);
+      }
+
+      &::placeholder {
+        color: var(--bluish-light-gray);
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .form-help {
+    margin: 1rem 0;
+    font-size: 13px;
+    color: var(--blue-gray);
+
+    a {
+      color: #14B8A6;
+      text-decoration: unset;
+
+      &:hover {
+        color: var(--bluish-light-gray);
+      }
+    }
+  }
+}
+
+/* Общие цвета под тёмную тему */
+.pj-form .form-control,
+.pj-form .form-select,
+.pj-form textarea.form-control {
+  background-color: #121826; /* тёмный фон инпута */
+  color: #E5E7EB; /* светлый текст */
+  border-color: #2A3346; /* граница */
+}
+
+.pj-form .form-control::placeholder {
+  color: #7A8599;
+}
+
+/* Фокус — бирюзовый PetJournal */
+.pj-form .form-control:focus,
+.pj-form .form-select:focus {
+  border-color: #14B8A6;
+  box-shadow: 0 0 0 .25rem rgba(20, 184, 166, .25);
+  outline: 0;
+}
+
+/* --- Autofill: Chrome/Edge/Safari --- */
+.pj-form .form-control:-webkit-autofill,
+.pj-form .form-control:-webkit-autofill:hover,
+.pj-form .form-control:-webkit-autofill:focus,
+.pj-form textarea.form-control:-webkit-autofill,
+.pj-form select.form-select:-webkit-autofill {
+  /* заливаем наш фон внутрь поля — убирает светлую заливку браузера */
+  box-shadow: 0 0 0 1000px #121826 inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #121826 inset !important;
+
+  -webkit-text-fill-color: #E5E7EB !important; /* цвет текста в autofill */
+  caret-color: #E5E7EB;
+  background-clip: padding-box;
+  transition: background-color 0s;
+  border-color: #2A3346;
+}
+
+/* Фокус + autofill — сохраняем нашу обводку */
+.pj-form .form-control:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px #121826 inset,
+  0 0 0 .25rem rgba(20, 184, 166, .25) !important;
+  border-color: #14B8A6 !important;
+}
+
+/* --- Autofill: Firefox --- */
+.pj-form .form-control:-moz-autofill,
+.pj-form textarea.form-control:-moz-autofill,
+.pj-form select.form-select:-moz-autofill {
+  box-shadow: 0 0 0 1000px #121826 inset !important;
+  color: #E5E7EB;
+}

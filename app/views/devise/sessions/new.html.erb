@@ -1,0 +1,58 @@
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h1 class="card-title">Вход</h1>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "pj-form needs-validation", novalidate: true }) do |f| %>
+          <% email_errors = resource.respond_to?(:errors) ? resource.errors.full_messages_for(:email) : [] %>
+          <% password_errors = resource.respond_to?(:errors) ? resource.errors.full_messages_for(:password) : [] %>
+
+          <div class="mb-3">
+            <%= f.label :email, class: "form-label " %>
+            <%= f.email_field :email, autocomplete: "email", required: true, class: "form-control #{'is-invalid' if email_errors.present?}", placeholder: "your@email.ru" %>
+            <div class="invalid-feedback">
+              <%= email_errors.presence || "Введите корректный email." %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, class: "form-label" %>
+            <%= f.password_field :password, required: true, autocomplete: "current-password", class: "form-control #{'is-invalid' if password_errors.present?}", placeholder: "••••••••" %>
+            <div class="invalid-feedback">
+              <%= password_errors.presence || "Введите пароль." %>
+            </div>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+            <div class="mb-3 form-check">
+              <%= f.check_box :remember_me, class: "form-check-input" %>
+              <%= f.label :remember_me, class: "form-check-label" %>
+            </div>
+          <% end %>
+
+          <div class="form-actions">
+            <%= f.submit "Войти", class: "btn btn-success__pj" %>
+            <%= link_to "Регистрация", new_user_registration_path, class: "btn btn-default__pj" %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="card-title">Почему PetJournal?</div>
+        <p>Напоминания, медкарта, печать паспорта.</p>
+        <ul>
+          <li>Приватно по умолчанию</li>
+          <li>Публичная ссылка на карточку для клиники</li>
+          <li>PDF/PNG для печати</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<% if resource.respond_to?(:errors) && resource.errors.any? %>
+  <% flash.now[:alert] = resource.errors.full_messages.to_sentence %>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h1 class="card-title">Забыли пароль?</h1>
+
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "pj-form needs-validation", novalidate: true }) do |f| %>
+          <% email_errors = resource.respond_to?(:errors) ? resource.errors.full_messages_for(:email) : [] %>
+
+          <div class="mb-3">
+            <%= f.label :email, class: "form-label" %>
+            <%= f.email_field :email, autocomplete: "email", required: true, class: "form-control #{'is-invalid' if email_errors.present?}", placeholder: "your@email.ru" %>
+            <div class="invalid-feedback">
+              <%= email_errors.presence || "Введите корректный email." %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit "Отправить", class: "btn btn-success__pj" %>
+            <%= link_to "Войти", new_user_session_path, class: "btn btn-default__pj" %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="card-title">Как это работает?</div>
+        <ul>
+          <li>Мы отправим письмо со ссылкой на восстановление пароля.</li>
+          <li>Ссылка действует 60 минут.</li>
+          <li>Не пришло письмо - проверьте Спам или подождите 2-3 минуты.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

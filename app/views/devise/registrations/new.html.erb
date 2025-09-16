@@ -1,0 +1,69 @@
+<% if resource.respond_to?(:errors) && resource.errors.any? %>
+  <% flash.now[:alert] = resource.errors.full_messages.to_sentence %>
+<% end %>
+
+<div class="row g-3">
+  <div class="col-lg-12">
+    <div class="card h-100">
+      <div class="card-body">
+        <h1 class="card-title">Регистрация</h1>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "pj-form needs-validation", novalidate: true}) do |f| %>
+          <% name_errors = resource&.errors&.full_messages_for(:name) || [] %>
+          <% name_errors_text = name_errors.to_sentence.presence %>
+          <% email_errors = resource.respond_to?(:errors) ? resource.errors.full_messages_for(:email) : [] %>
+          <% email_errors_text = email_errors.to_sentence.presence %>
+          <% password_errors = resource.respond_to?(:errors) ? resource.errors.full_messages_for(:password) : [] %>
+          <% password_confirmation_errors = resource.respond_to?(:errors) ? resource.errors.full_messages_for(:password_confirmation) : [] %>
+          <% password_errors_text = (password_errors + password_confirmation_errors).uniq.to_sentence.presence %>
+          <% password_placeholder = @minimum_password_length ? "Минимум #{@minimum_password_length} символов" : "••••••••" %>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <%= f.label :name, class: "form-label" %>
+                <%= f.text_field :name, required: true, autocomplete: "name", class: "form-control #{'is-invalid' if name_errors_text}", placeholder: "Введите имя" %>
+                <div class="invalid-feedback">
+                  <%= name_errors_text || "Введите имя." %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <%= f.label :password, class: "form-label" %>
+                <%= f.password_field :password, required: true, autocomplete: "new-password", class: "form-control #{'is-invalid' if password_errors_text}", placeholder: password_placeholder %>
+                <div class="invalid-feedback">
+                  <%= password_errors_text || "Введите пароль." %>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <%= f.label :email, class: "form-label" %>
+                <%= f.email_field :email, pattern: "[^@\\s]+@[^@\\s]+\\.[^@\\s]+", autocomplete: "email", required: true, class: "form-control #{'is-invalid' if email_errors_text}", placeholder: "your@email.ru" %>
+                <div class="invalid-feedback">
+                  <%= email_errors_text || "Введите корректный email." %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <%= f.label :password_confirmation, class: "form-label" %>
+                <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "form-control #{'is-invalid' if password_confirmation_errors.present?}", placeholder: "Повторите пароль" %>
+                <div class="invalid-feedback">
+                  <%= password_confirmation_errors.to_sentence.presence || password_errors_text || "Повторите пароль." %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit "Создать аккаунт", class: "btn btn-success__pj" %>
+            <%= link_to "Войти", new_user_session_path, class: "btn btn-default__pj" %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<% flash.each do |type, msg| %>
+  <% next if msg.blank? %>
+  <% bs = { notice: "success", alert: "danger" }.fetch(type.to_sym, "secondary") %>
+  <div class="alert alert-<%= bs %> mb-3"><%= msg %></div>
+<% end %>

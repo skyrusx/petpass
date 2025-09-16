@@ -18,9 +18,59 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+  <body class="d-flex flex-column min-vh-100">
+    <header class="header">
+      <div class="container mx-auto mt-28 px-5 flex">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid p-0">
+            <%= link_to root_path, class: "navbar-brand" do %>
+              <span class="navbar-brand__logo">Pj</span>
+              <span>PetJournal</span>
+            <% end %>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <% if user_signed_in? %>
+                  <li class="nav-item">
+                    <%= button_to "Выйти", destroy_user_session_path, method: :delete, class: "btn btn-default__pj", form: { class: "d-inline", data: { turbo_confirm: "Выйти из аккаунта?" } } %>
+                  </li>
+                <% else %>
+                  <li class="nav-item"><%= link_to "Войти", new_user_session_path, class: "nav-link" %></li>
+                  <li class="nav-item"><%= link_to "Регистрация", new_user_registration_path, class: "nav-link" %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="container mx-auto mt-28 px-5 flex">
+        <%= yield %>
+        <%= render "shared/toasts" %>
+      </div>
     </main>
+
+    <footer class="footer mt-auto">
+      <div class="container mx-auto mt-28 px-5 flex">
+        © 2025 PetJournal. Это семейный дневник, <b>не</b> официальный ветпаспорт.
+      </div>
+    </footer>
   </body>
 </html>
+
+<%= render "shared/toasts" %>
+
+<script type="module">
+    function showToasts() {
+        document.querySelectorAll('#toast-container .toast').forEach((el) => {
+            window.bootstrap?.Toast.getOrCreateInstance(el).show();
+        });
+    }
+    document.addEventListener('turbo:load',   showToasts);
+    document.addEventListener('turbo:render', showToasts); // когда Devise рендерит :new с ошибкой
+    document.addEventListener('DOMContentLoaded', showToasts);
+</script>
